@@ -18,4 +18,5 @@ public class CreatedAgent {
     private String phone;
     private String status;
     private String createdAt;
+    private String otpChannel;
 }

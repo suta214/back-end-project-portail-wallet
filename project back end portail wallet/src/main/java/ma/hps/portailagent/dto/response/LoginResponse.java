@@ -16,4 +16,5 @@ public class LoginResponse {
     private String agentCode;
     private String agentType;
     private List<String> privileges;
+    private boolean mustChangePassword;
 }

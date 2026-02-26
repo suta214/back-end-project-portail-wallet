@@ -17,4 +17,9 @@ public interface AgentRepository {
     List<Privilege> findPrivilegesByAgentId(Long agentId);
     void addPrivilege(Long agentId, Privilege privilege);
     void removePrivilege(Long agentId, Privilege privilege);
+
+    long countAll();
+
+    void saveFeatures(Long agentId, List<String> features);
+    List<String> findFeaturesByAgentId(Long agentId);
 }

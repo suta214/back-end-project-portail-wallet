@@ -16,4 +16,7 @@ public interface ClientRepository {
     Client save(Client client);
     Client update(Client client);
     void delete(Long id);
+
+    long countActive();
+    long countAll();
 }

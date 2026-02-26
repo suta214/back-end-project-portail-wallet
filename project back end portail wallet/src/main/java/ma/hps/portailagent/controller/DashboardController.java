@@ -6,7 +6,6 @@ import ma.hps.portailagent.security.AgentDetails;
 import ma.hps.portailagent.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/dashboard")
 @Slf4j
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:3000"})
-@PreAuthorize("hasAnyRole('PROFILE')")
 public class DashboardController {
     @Autowired
     private ProfileService profileService;

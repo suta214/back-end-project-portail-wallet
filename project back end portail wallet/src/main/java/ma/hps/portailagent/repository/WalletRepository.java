@@ -16,4 +16,7 @@ public interface WalletRepository {
     Wallet save(Wallet wallet);
     Wallet update(Wallet wallet);
     void delete(Long id);
+
+    long countAll();
+    java.math.BigDecimal sumAllBalance();
 }

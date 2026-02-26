@@ -11,8 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -40,9 +40,10 @@ public class AgentController {
     @GetMapping
     public ResponseEntity<Map<String, Object>> getAgents() {
         log.info("Fetching all agents");
+        List<CreatedAgent> agents = agentService.getAllAgents();
         Map<String, Object> response = new HashMap<>();
-        response.put("data", new java.util.ArrayList<>());
-        response.put("total", 0);
+        response.put("data", agents);
+        response.put("total", agents.size());
         return ResponseEntity.ok(response);
     }
 }

@@ -52,14 +52,16 @@ public class AuthService {
 
         String token = jwtUtil.generateToken(agent.getAgentCode(), claims);
 
-        return new LoginResponse(
+        LoginResponse response = new LoginResponse(
                 token,
                 agent.getAgentCode(),
                 agent.getFullName(),
                 agent.getAgentCode(),
                 agent.getAgentType().toString(),
-                privileges
+                privileges,
+                agent.isMustChangePassword()
         );
+        return response;
     }
 
     public String refreshToken(String token) {

@@ -2,17 +2,26 @@ spring:
   application:
     name: Portail Agent Backend
   datasource:
-    url: jdbc:sqlite:database.db
-    driver-class-name: org.sqlite.JDBC
-  jpa:
-    database-platform: org.hibernate.dialect.SQLiteDialect
-    hibernate:
-      ddl-auto: create-drop
+    url: jdbc:mysql://localhost:3306/portail_wallet?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Ac//78DR+m@ri@m
   sql:
     init:
       mode: always
       data-locations: classpath:data.sql
       schema-locations: classpath:schema.sql
+  # SMTP désactivé (ports bloqués réseau) — utilisation de l'API HTTP Mailtrap
+  mail:
+    host: disabled
+    port: 0
+    username: disabled
+    password: disabled
+
+mailtrap:
+  api-token: ${MAILTRAP_API_TOKEN:METTRE_ICI_LE_TOKEN}
+  inbox-id: ${MAILTRAP_INBOX_ID:4414169}
+  api-url: https://sandbox.api.mailtrap.io/api/send
   jackson:
     serialization:
       write-dates-as-timestamps: false

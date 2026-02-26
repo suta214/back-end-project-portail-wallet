@@ -2,10 +2,13 @@ package ma.hps.portailagent.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.hps.portailagent.enums.AgentType;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,13 +25,11 @@ public class CreateAgentRequest {
     @NotBlank(message = "lastName est requis")
     private String lastName;
     
-    @NotBlank(message = "agentType est requis")
+    @NotNull(message = "agentType est requis")
     private AgentType agentType;
     
-    @NotBlank(message = "idType est requis")
     private String idType;
-    
-    @NotBlank(message = "idNumber est requis")
+
     private String idNumber;
     
     @Email(message = "email doit être valide")
@@ -38,6 +39,11 @@ public class CreateAgentRequest {
     @NotBlank(message = "phone est requis")
     private String phone;
     
+    @NotBlank(message = "otpChannel est requis")
+    private String otpChannel;
+
+    private List<String> features;
+
     private String contractType;
     private String patentNumber;
     private String contractDate;

@@ -121,7 +121,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
             Timestamp.valueOf(LocalDateTime.now())
         );
 
-        Long id = jdbcTemplate.queryForObject("SELECT last_insert_rowid()", Long.class);
+        Long id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         transaction.setId(id);
         transaction.setCreatedAt(LocalDateTime.now());
         
@@ -149,5 +149,40 @@ public class TransactionRepositoryImpl implements TransactionRepository {
     public void delete(Long id) {
         String sql = "DELETE FROM transaction_logs WHERE id = ?";
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public long countTodayByAgentIdAndType(Long agentId, String type) {
+        String sql = "SELECT COUNT(*) FROM transaction_logs WHERE agent_id = ? AND type = ? AND DATE(created_at) = CURDATE()";
+        Long count = jdbcTemplate.queryForObject(sql, Long.class, agentId, type);
+        return count != null ? count : 0;
+    }
+
+    @Override
+    public java.math.BigDecimal sumTodayAmountByAgentIdAndType(Long agentId, String type) {
+        String sql = "SELECT COALESCE(SUM(amount), 0) FROM transaction_logs WHERE agent_id = ? AND type = ? AND DATE(created_at) = CURDATE()";
+        java.math.BigDecimal sum = jdbcTemplate.queryForObject(sql, java.math.BigDecimal.class, agentId, type);
+        return sum != null ? sum : java.math.BigDecimal.ZERO;
+    }
+
+    @Override
+    public long countAllToday() {
+        String sql = "SELECT COUNT(*) FROM transaction_logs WHERE DATE(created_at) = CURDATE()";
+        Long count = jdbcTemplate.queryForObject(sql, Long.class);
+        return count != null ? count : 0;
+    }
+
+    @Override
+    public java.math.BigDecimal sumAllAmountToday() {
+        String sql = "SELECT COALESCE(SUM(amount), 0) FROM transaction_logs WHERE DATE(created_at) = CURDATE()";
+        java.math.BigDecimal sum = jdbcTemplate.queryForObject(sql, java.math.BigDecimal.class);
+        return sum != null ? sum : java.math.BigDecimal.ZERO;
+    }
+
+    @Override
+    public long countPending() {
+        String sql = "SELECT COUNT(*) FROM transaction_logs WHERE status = 'EN_ATTENTE'";
+        Long count = jdbcTemplate.queryForObject(sql, Long.class);
+        return count != null ? count : 0;
     }
 }

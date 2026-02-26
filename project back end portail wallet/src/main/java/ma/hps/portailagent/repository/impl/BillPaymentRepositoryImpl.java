@@ -90,7 +90,7 @@ public class BillPaymentRepositoryImpl implements BillPaymentRepository {
             Timestamp.valueOf(LocalDateTime.now())
         );
 
-        Long id = jdbcTemplate.queryForObject("SELECT last_insert_rowid()", Long.class);
+        Long id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         billPayment.setId(id);
         billPayment.setCreatedAt(LocalDateTime.now());
         

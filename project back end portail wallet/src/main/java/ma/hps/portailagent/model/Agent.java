@@ -23,4 +23,6 @@ public class Agent {
     private boolean enabled;
     private LocalDateTime createdAt;
     private List<Privilege> privileges;
+    private boolean mustChangePassword;
+    private String otpChannel;
 }

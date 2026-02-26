@@ -88,7 +88,7 @@ public class TransferRepositoryImpl implements TransferRepository {
             Timestamp.valueOf(LocalDateTime.now())
         );
 
-        Long id = jdbcTemplate.queryForObject("SELECT last_insert_rowid()", Long.class);
+        Long id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         transfer.setId(id);
         transfer.setCreatedAt(LocalDateTime.now());
         

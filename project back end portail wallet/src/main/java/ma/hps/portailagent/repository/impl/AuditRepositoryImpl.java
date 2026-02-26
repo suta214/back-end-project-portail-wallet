@@ -73,7 +73,7 @@ public class AuditRepositoryImpl implements AuditRepository {
             Timestamp.valueOf(LocalDateTime.now())
         );
 
-        Long id = jdbcTemplate.queryForObject("SELECT last_insert_rowid()", Long.class);
+        Long id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         auditLog.setId(id);
         auditLog.setCreatedAt(LocalDateTime.now());
         

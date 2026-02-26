@@ -117,7 +117,7 @@ public class ClientRepositoryImpl implements ClientRepository {
             Timestamp.valueOf(LocalDateTime.now())
         );
 
-        Long id = jdbcTemplate.queryForObject("SELECT last_insert_rowid()", Long.class);
+        Long id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         client.setId(id);
         client.setCreatedAt(LocalDateTime.now());
         
@@ -147,5 +147,19 @@ public class ClientRepositoryImpl implements ClientRepository {
     public void delete(Long id) {
         String sql = "DELETE FROM clients WHERE id = ?";
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public long countActive() {
+        String sql = "SELECT COUNT(*) FROM clients WHERE status = 'Actif'";
+        Long count = jdbcTemplate.queryForObject(sql, Long.class);
+        return count != null ? count : 0;
+    }
+
+    @Override
+    public long countAll() {
+        String sql = "SELECT COUNT(*) FROM clients";
+        Long count = jdbcTemplate.queryForObject(sql, Long.class);
+        return count != null ? count : 0;
     }
 }

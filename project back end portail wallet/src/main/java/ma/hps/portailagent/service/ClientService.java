@@ -76,7 +76,7 @@ public class ClientService {
         client.setEmail(request.getEmail());
         client.setPhone(request.getPhone());
         
-        Client updated = clientRepository.save(client);
+        Client updated = clientRepository.update(client);
         return toClientResponse(updated);
     }
 

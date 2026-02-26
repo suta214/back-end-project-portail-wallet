@@ -113,7 +113,7 @@ public class WalletRepositoryImpl implements WalletRepository {
             Timestamp.valueOf(LocalDateTime.now())
         );
 
-        Long id = jdbcTemplate.queryForObject("SELECT last_insert_rowid()", Long.class);
+        Long id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         wallet.setId(id);
         wallet.setCreatedAt(LocalDateTime.now());
         
@@ -143,5 +143,19 @@ public class WalletRepositoryImpl implements WalletRepository {
     public void delete(Long id) {
         String sql = "DELETE FROM wallets WHERE id = ?";
         jdbcTemplate.update(sql, id);
+    }
+
+    @Override
+    public long countAll() {
+        String sql = "SELECT COUNT(*) FROM wallets WHERE status = 'ACTIF'";
+        Long count = jdbcTemplate.queryForObject(sql, Long.class);
+        return count != null ? count : 0;
+    }
+
+    @Override
+    public BigDecimal sumAllBalance() {
+        String sql = "SELECT COALESCE(SUM(balance), 0) FROM wallets WHERE status = 'ACTIF'";
+        BigDecimal sum = jdbcTemplate.queryForObject(sql, BigDecimal.class);
+        return sum != null ? sum : BigDecimal.ZERO;
     }
 }
